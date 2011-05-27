@@ -1,0 +1,7 @@
+{
+ "inputs": "critics",
+ "query": [
+   {"map": {"language": "javascript", "bucket": "pci-mapred", "key":"map_distance.js"}},
+   {"reduce": {"language": "javascript", "bucket": "pci-mapred", "key":"reduce_distance.js"}}
+ ]
+}
