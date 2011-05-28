@@ -13,22 +13,40 @@ fs.readFile("./critics.json", function(err, data) {
   if(err) throw err;
   var critics = JSON.parse(data);
 
-  // Transform the critics values into an array
-  var values = keys(critics).reduce(function(accum, key) {
-    var obj = {
-      "name": key,
-      "items": critics[key],
-      "scores": {}
-    };
-    accum.push(obj);
+  // Transform critics into a list of 
+  // [name, title, rating, other_rating, similarity]
+  var values = keys(critics).reduce(function(accum, name) {
+    var current = critics[name];
+    for(var other_name in critics) {
+      if(name != other_name) {
+        var other = critics[other_name];
+        for(var title in other) {
+          if(title in current) {
+            var rating = current[title];
+            var other_rating = other[title];
+            accum.push({"name": name,
+                        "other_name": other_name,
+                        "title": title,
+                        "rating": rating,
+                        "other_rating": other_rating, 
+                        "similarity": 0});
+          }
+        }
+      }
+    }
     return accum;
   }, []);
-
   // Load the reduce function
-  fs.readFile(process.argv[2], function(err, data) {
+  fs.readFile("reduce_" + process.argv[2] + ".js", function(err, data) {
     if(err) throw err;
-    var reduce_distance = eval("("+data+")");
-    console.dir(reduce_distance(values));
+    var reduce_similarity = eval("("+data+")");
+    var reduce_result  = reduce_similarity(values);
+    //console.dir(reduce_result);
+
+    fs.readFile("finalize_" + process.argv[2] + ".js", function(err, data) {
+      var finalize_similarity = eval("("+data+")");      
+      console.dir(finalize_similarity(reduce_result));
+    })
   });
 
 });
