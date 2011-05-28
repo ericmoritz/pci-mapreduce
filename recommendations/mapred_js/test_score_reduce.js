@@ -25,7 +25,7 @@ fs.readFile("./critics.json", function(err, data) {
   }, []);
 
   // Load the reduce function
-  fs.readFile("./reduce_distance.js", function(err, data) {
+  fs.readFile(process.argv[2], function(err, data) {
     if(err) throw err;
     var reduce_distance = eval("("+data+")");
     console.dir(reduce_distance(values));
