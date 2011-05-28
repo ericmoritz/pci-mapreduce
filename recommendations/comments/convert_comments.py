@@ -8,7 +8,7 @@ bucket = client.bucket("kns.comments.urls")
 new_bucket = client.bucket("kns.events")
 
 for url in bucket.get_keys():
-    obj = bucket.get(key)
+    obj = bucket.get(url)
     doc = obj.get_data()
 
     for actor in doc.keys():
@@ -24,7 +24,7 @@ for url in bucket.get_keys():
                                 url,
                                 actor)
 
-        obj = new_bucket.get(new_key)
+        obj = new_bucket.get(new_key.encode("utf-8"))
         obj.set_data(new_doc)
         obj.set_content_type("application/json")
         obj.store()
