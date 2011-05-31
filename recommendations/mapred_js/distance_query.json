@@ -1,0 +1,12 @@
+{
+ "inputs": "kns.events",
+ "query": [
+   {"map": {"language": "javascript", "bucket": "pci-mapred", "key": "map_events.js"}},
+   {"reduce": {"language": "javascript", "bucket": "pci-mapred", "key": "reduce_events.js"}},
+   {"reduce": {"language": "javascript", "bucket": "pci-mapred", "key": "reduce_si.js"}},
+   {"reduce": {"language": "javascript", "bucket": "pci-mapred", "key": "reduce_distance.js"}},
+   {"reduce": {"language": "javascript", "bucket": "pci-mapred", "key": "finalize_distance.js"}},
+   {"reduce": {"language": "javascript", "source": "function(v) { return v; }"}}
+ ],
+ "timeout": 360000
+}
