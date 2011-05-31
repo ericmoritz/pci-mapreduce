@@ -16,7 +16,9 @@ function(values) {
   // Take the result of the pervious reduce phase 
   // and turn the calculated simularity into a number between 0 and 1
   return values.map(function(current) {
-    current.simularity = 1 / (1 + current.simularity);
+    // simularity has already been calculated
+    if(current.simularity) return current;
+    current.simularity = 1 / (1 + current.sqSum);
     return current;
   })
 }
