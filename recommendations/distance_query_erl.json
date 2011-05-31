@@ -1,0 +1,8 @@
+{
+ "inputs": "critics.events",
+ "query": [
+   {"map": {"language": "erlang", "module": "recommend", "function": "map_events"}},
+   {"reduce": {"language": "erlang", "module": "recommend", "function": "reduce_events"}},
+   {"reduce": {"language": "erlang", "module": "recommend", "function": "reduce_prefs_csv"}}
+   ]
+}
